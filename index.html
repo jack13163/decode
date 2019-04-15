@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
-    <title>绘制解码图</title>
+    <title>decode</title>
     <script src="js/snap.svg.js" type="text/javascript" charset="utf-8"></script>
 </head>
- 
+
 <body>
     <svg id="svg" width="1200" height="700"></svg>
     <script>
@@ -18,17 +18,17 @@
             var first_x = 20; //第一个基因位距离开始的水平距离
             var first_y = 1; //第一个基因位距离开始的水平距离
             var radius = 4; //圆角矩形的半径
- 
+
             //计算染色体的长度
             var len = first_x * 2 + data.length * rect_width + (data.length - 1) * dis;
- 
+
             //绘制圆角矩形
             var c1 = svg.paper.rect(x, y, len, rect_height, radius).attr({
                 fill: "white",
                 stroke: 'gray'
             });
             var g = svg.group(c1);
- 
+
             for (i = 0; i < data.length; i++) {
                 //绘制基因位位置
                 var rect = svg.paper.rect(x + first_x + dis * i + i * rect_width, y + first_y, rect_width,
@@ -45,10 +45,10 @@
                 var g0 = svg.group(rect, text);
                 g0.appendTo(g);
             }
- 
+
             return g.drag();
         }
- 
+
         //绘制解码
         function createDecodings(svg, x, y, data) {
             //基因的宽度和高度
@@ -58,17 +58,17 @@
             var first_x = 2; //第一个基因位距离开始的水平距离
             var first_y = 1; //第一个基因位距离开始的水平距离
             var radius = 4; //圆角矩形的半径
- 
+
             //计算染色体的长度
             var len = first_x * 2 + data.length * rect_width + (data.length - 1) * dis;
- 
+
             //绘制圆角矩形
             var c1 = svg.paper.rect(x, y, len, rect_height).attr({
                 fill: "white",
                 stroke: 'gray'
             });
             var g = svg.group(c1);
- 
+
             for (i = 0; i < data.length; i++) {
                 //绘制基因位位置
                 var rect = svg.paper.rect(x + first_x + dis * i + i * rect_width, y + first_y, rect_width, rect_height -
@@ -96,15 +96,10 @@
                 var g0 = svg.group(rect, text);
                 g0.appendTo(g);
             }
- 
+
             return g.drag();
         }
- 
-        //绘制箭头
-        function drawArrow(svg, fromX, fromY, toX, toY, theta, headlen, width, color) {
- 
-        }
- 
+
         //创建圆滑块 
         function createBlob(x, y, width, height, color, alpha) {
             var rect = svg.paper.rect(x, y, width, height).attr({
@@ -127,23 +122,23 @@
             });
             return rect;
         }
- 
+
         //获取绘图环境
         var svg = Snap("#svg");
         var start = false;
         var loc1 = {};
         var loc2 = {};
- 
+
         //绘制背景
         var startx = 50;
         var starty = 80;
         var dis1 = 50;
         var dis2 = 60;
- 
+
         svg.paper.text(130, 50, 'Changing tank').drag();
         svg.paper.text(520, 50, 'Distiller').drag();
         svg.paper.text(860, 50, 'Flow rate').drag();
- 
+
         //标注
         svg.paper.rect(1100, 60, 20, 10).attr({
             fill: "gray"
@@ -153,43 +148,33 @@
             fill: "black"
         });
         svg.paper.text(1130, 100, 'Enabled');
- 
+
         //第一步
-        var c1 = createChromosome(svg, startx, starty, [5, 7, 1, 1, 2, 6, 9, 3, 1]);
+        var c1 = createChromosome(svg, startx, starty, [5, 8, 1, 1, 2, 6, 9, 3, 1]);
         var c2 = createChromosome(svg, c1.getBBox().x + c1.getBBox().width + dis1, starty,
-            [1, 5, 2, 2, 1, 2, 3, 4, 1]);
+            [1, 4, 2, 2, 1, 2, 3, 4, 1]);
         var c3 = createChromosome(svg, c2.getBBox().x + c2.getBBox().width + dis1, starty,
             [1, 0, 1, 1, 0, 1, 1, 0, 1]);
- 
+
         var c4 = createDecodings(svg, startx + 52, 140, [1, 2, 3, 4, 5, 6, 7, 8, 9]);
         var c5 = createDecodings(svg, c2.getBBox().cx - 35, starty + dis2, [1, 2, 3]);
         var c6 = createDecodings(svg, c3.getBBox().cx - 35, starty + dis2, [0, 1, 2, 3]);
- 
-        //绘制箭头
-        drawArrow(svg, 80, starty + 12, 260, starty - 12, 30, 6, 1, '#000');
-        drawArrow(svg, 430, starty + 12, 540, starty - 12, 30, 6, 1, '#000');
-        drawArrow(svg, 780, starty + 12, 790, starty - 12, 30, 6, 1, '#000');
- 
+
         //第二步
-        var c7 = createChromosome(svg, startx, starty + dis2 * 2, [5, 7, 1, 1, 2, 6, 9, 3, 1]);
+        var c7 = createChromosome(svg, startx, starty + dis2 * 2, [5, 8, 1, 1, 2, 6, 9, 3, 1]);
         var c8 = createChromosome(svg, c1.getBBox().x + c1.getBBox().width + dis1, starty + dis2 * 2,
-            [1, 5, 2, 2, 1, 2, 3, 4, 1]);
+            [1, 4, 2, 2, 1, 2, 3, 4, 1]);
         var c9 = createChromosome(svg, c2.getBBox().x + c2.getBBox().width + dis1, starty + dis2 * 2,
             [1, 0, 1, 1, 0, 1, 1, 0, 1]);
         var c10 = createDecodings(svg, startx + 52, starty + dis2 * 3, [1, 2, 3, 4, 5, 6, 7, 8, 9]);
         var c11 = createDecodings(svg, c2.getBBox().cx - 35, starty + dis2 * 3, [1, 2, 3]);
         var c12 = createDecodings(svg, c3.getBBox().cx - 35, starty + dis2 * 3, [0, 1, 2, 3]);
- 
-        //绘制箭头
-        drawArrow(svg, 110, starty + 12, 80, starty - 12, 30, 6, 1, '#000');
-        drawArrow(svg, 460, starty + 12, 510, starty - 12, 30, 6, 1, '#000');
-        drawArrow(svg, 810, starty + 12, 760, starty - 12, 30, 6, 1, '#000');
- 
+
         var blob_height_1 = 18;
         var blob_height_2 = 68;
         var blob_height_3 = 148;
         var blob_height_4 = 198;
- 
+
         //创建滑块
         var blob1 = createBlob(70, starty - 2, 20, 14, "#F00", 0.5);
         var blob2 = createBlob(420, starty - 2, 20, 14, "#F00", 0.5);
@@ -197,7 +182,7 @@
         var blob4 = createBlob(250, starty + dis2 - 2, 20, 14, "#F00", 0.5);
         var blob5 = createBlob(530, starty + dis2 - 2, 20, 14, "#F00", 0.5);
         var blob6 = createBlob(780, starty + dis2 - 2, 20, 14, "#F00", 0.5);
- 
+
         var blob7 = createBlob(100, starty + dis2 * 2 - 2, 20, 14, "#F00", 0.5);
         var blob8 = createBlob(450, starty + dis2 * 2 - 2, 20, 14, "#F00", 0.5);
         var blob9 = createBlob(800, starty + dis2 * 2 - 2, 20, 14, "#F00", 0.5);
@@ -206,5 +191,5 @@
         var blob12 = createBlob(750, starty + dis2 * 3 - 3, 20, 14, "#F00", 0.5);
     </script>
 </body>
- 
+
 </html>
